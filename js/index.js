@@ -73,9 +73,9 @@ function printAllDetails(currencies) {
     currencies.forEach( function (currency)  {
         el.innerHTML += `
             <div class="detail">
-                <p class="name">Name: ${currency.name}</p>
-                <p>Price USD: ${currency.price_usd}</p>
+                <h2 class="name"> ${currency.name}</h2>
                 <p>Rank: ${currency.rank}</p>
+                <p>Price USD: ${currency.price_usd}</p>
                 <p>Percent change 1h: ${currency.percent_change_1h}</p>
                 <p>Percent change 24h: ${currency.percent_change_24h}</p>
                 <p>Percent change 7d: ${currency.percent_change_7d}</p>
