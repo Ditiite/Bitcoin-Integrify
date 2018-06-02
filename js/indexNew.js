@@ -2,24 +2,46 @@
 //Filter coins by input from search bar
 const filterCoins = function (obj) {
     const input = document.querySelector("input[name=search]");
-    
     const filterName = document.querySelectorAll(".details .coin");
+
     input.addEventListener('input', function() {
         const filterBy = input.value.toLowerCase();
 
         filterName.forEach(function (item) {
     
             const name = item.querySelector('.name').innerText.toLowerCase();
+            console.log('name1',name);
             if(name.includes(filterBy)) {
                 item.style.display = 'block';
             } else {
                 item.style.display = 'none';
             }
-        })
-    })
+        });
+    });
 };
 
-const sortByName = function (obj) {}
+// const sortByName = function (obj) {
+//     const coins = document.querySelector('.coin');
+//     coins.innerHTML = '';
+
+//     const sortNameBtn = document.querySelector('.sort-btn-name');
+//     const filterName = document.querySelectorAll(".details .coin");
+//     let sortedNames;
+
+//     sortNameBtn.addEventListener('click', function() {
+//         const sortNameArray = [];
+//         obj.forEach(function (coin, i) {
+//             const name = coin.name;
+//             sortNameArray.push(name);
+//         });
+
+//     sortedNames = sortNameArray.sort();
+//     filterName.innerHTML = sortedNames;
+//     console.log(sortedNames);
+//     });
+
+// }
+
 const sortByPrice = function (obj) {}
 const sortByRank = function (obj) {}
 
@@ -30,7 +52,7 @@ const cryptoUI = function (obj) {
     obj.forEach(function (coin, i) {
         let coinDiv = document.createElement("div");
         coinDiv.className = "coin"
-        let coinName = document.createElement("h1");
+        let coinName = document.createElement("h2");
         coinName.className = "name";
         let coinPrice = document.createElement("p");
         let coinRank = document.createElement("p");
@@ -77,13 +99,22 @@ const cryptoUI = function (obj) {
 
 }
 
+//Counting total amount of cryptocurrency coins
+function printAmountOfCoins(obj) {
+    const totalNum = document.querySelector('.total-num');
+    totalNum.innerHTML = obj.length;
+}
+
+
 fetch("https://api.coinmarketcap.com/v1/ticker/?limit=50")
     .then(function (response) {
         return response.json();
     })
     .then(function (myJson) {
 
-        cryptoUI(myJson)
+        cryptoUI(myJson);
         filterCoins(myJson);
+        printAmountOfCoins(myJson);
+        sortByName(myJson);
     });
 
