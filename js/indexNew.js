@@ -8,9 +8,8 @@ const filterCoins = function (obj) {
         const filterBy = input.value.toLowerCase();
 
         filterName.forEach(function (item) {
-    
             const name = item.querySelector('.name').innerText.toLowerCase();
-            console.log('name1',name);
+            
             if(name.includes(filterBy)) {
                 item.style.display = 'block';
             } else {
@@ -20,34 +19,74 @@ const filterCoins = function (obj) {
     });
 };
 
-// const sortByName = function (obj) {
-//     const coins = document.querySelector('.coin');
-//     coins.innerHTML = '';
+//Sort by name
+const sortByName = function (obj) {
+    const sortNameBtn = document.querySelector('.sort-btn-name');
 
-//     const sortNameBtn = document.querySelector('.sort-btn-name');
-//     const filterName = document.querySelectorAll(".details .coin");
-//     let sortedNames;
+    sortNameBtn.addEventListener('click', function () {
 
-//     sortNameBtn.addEventListener('click', function() {
-//         const sortNameArray = [];
-//         obj.forEach(function (coin, i) {
-//             const name = coin.name;
-//             sortNameArray.push(name);
-//         });
+        const sortedObjName = obj.sort(function (a, b) {
+            const aName = a.name.toLowerCase();
+            const bName = b.name.toLowerCase();
 
-//     sortedNames = sortNameArray.sort();
-//     filterName.innerHTML = sortedNames;
-//     console.log(sortedNames);
-//     });
+            if (aName > bName) {
+                return 1;
+            } else {
+                return -1;
+            }
+            return 0;
+        });
 
-// }
+        cryptoUI(sortedObjName);
+    })
+}
 
-const sortByPrice = function (obj) {}
-const sortByRank = function (obj) {}
+
+// Sort by price
+const sortByPrice = function (obj) {
+    const sortPriceBtn = document.querySelector('.sort-btn-price');
+
+    sortPriceBtn.addEventListener('click', function() {
+        const sortedObj = obj.sort(function (a, b) {
+            const aPrice = parseFloat(a.price_usd);
+            const bPrice = parseFloat(b.price_usd);
+
+            if (aPrice > bPrice) {
+                return 1;
+            } else {
+                return -1;
+            }
+        }); 
+        
+        cryptoUI(sortedObj);
+    })
+}
+
+
+// Sort by rank
+const sortByRank = function (obj) {
+    const sortRankBtn = document.querySelector('.sort-btn-rank');
+
+    sortRankBtn.addEventListener('click', function () {
+        const sortedObjRank = obj.sort(function (a, b) {
+            const aRank = parseInt(a.rank);
+            const bRank = parseInt(b.rank);
+
+            if (aRank > bRank) {
+                return 1;
+            } else {
+                return -1;
+            }
+            return 0;
+        });
+
+        cryptoUI(sortedObjRank);
+    })
+}
 
 const cryptoUI = function (obj) {
-    // coinsCointainer.innerHTML = ""
-    const coinsCointainer = document.querySelector(".details")
+    const coinsCointainer = document.querySelector(".details");
+    coinsCointainer.innerHTML = "";
 
     obj.forEach(function (coin, i) {
         let coinDiv = document.createElement("div");
@@ -115,6 +154,8 @@ fetch("https://api.coinmarketcap.com/v1/ticker/?limit=50")
         cryptoUI(myJson);
         filterCoins(myJson);
         printAmountOfCoins(myJson);
+        sortByPrice(myJson);
+        sortByRank(myJson);
         sortByName(myJson);
     });
 
