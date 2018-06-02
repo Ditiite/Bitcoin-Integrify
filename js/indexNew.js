@@ -100,24 +100,24 @@ const cryptoUI = function (obj) {
         let coinPercentWeek = document.createElement("p");
     
         coinName.textContent = coin.name;
-        coinPrice.textContent = 'Price USD: ' + coin.price_usd;
-        coinRank.textContent = 'Rank: ' + coin.rank;
+        coinPrice.textContent = '$: ' + coin.price_usd;
+        coinRank.textContent = coin.rank;
 
-        coinPercentH.textContent = 'Percent change 1h: ' + coin.percent_change_1h;
+        coinPercentH.textContent = coin.percent_change_1h;
         if(coin.percent_change_1h < 0) {
             coinPercentH.style.color = '#ff0033';
         } else {
             coinPercentH.style.color = '#6aff00';
         }
 
-        coinPercentDay.textContent = 'Percent change 24h: ' + coin.percent_change_24h;
+        coinPercentDay.textContent = coin.percent_change_24h;
         if(coin.percent_change_24h < 0) {
             coinPercentDay.style.color = '#ff0033';
         } else {
             coinPercentDay.style.color = '#6aff00';
         }
 
-        coinPercentWeek.textContent = 'Percent change 7d: ' + coin.percent_change_7d;
+        coinPercentWeek.textContent = coin.percent_change_7d;
         
         if(coin.percent_change_7d < 0) {
             coinPercentWeek.style.color = '#ff0033';
