@@ -2,16 +2,16 @@
 //Filter coins by input from search bar
 const filterCoins = function (obj) {
     const input = document.querySelector("input[name=search]");
-    const filterName = document.querySelectorAll(".details .coin");
-
+    
     input.addEventListener('input', function() {
+        const filterName = document.querySelectorAll(".details .coin");
         const filterBy = input.value.toLowerCase();
 
         filterName.forEach(function (item) {
             const name = item.querySelector('.name').innerText.toLowerCase();
             
             if(name.includes(filterBy)) {
-                item.style.display = 'block';
+                item.style.display = 'grid';
             } else {
                 item.style.display = 'none';
             }
@@ -42,9 +42,9 @@ const sortByName = function (obj) {
 }
 
 
-// Sort by price
+// Sort by price from lowest to highest
 const sortByPrice = function (obj) {
-    const sortPriceBtn = document.querySelector('.sort-btn-price');
+    const sortPriceBtn = document.querySelector('.sort-btn-price-lowest');
 
     sortPriceBtn.addEventListener('click', function() {
         const sortedObj = obj.sort(function (a, b) {
@@ -62,6 +62,26 @@ const sortByPrice = function (obj) {
     })
 }
 
+
+// Sort by price from highest to lowest
+const sortByPriceHighest = function (obj) {
+    const sortPriceBtnH = document.querySelector('.sort-btn-price-higest');
+
+    sortPriceBtnH.addEventListener('click', function () {
+        const sortedPrice = obj.sort(function (a, b) {
+            const aPrice = parseFloat(a.price_usd);
+            const bPrice = parseFloat(b.price_usd);
+
+            if (bPrice > aPrice ) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });
+
+        cryptoUI(sortedPrice);
+    })
+}
 
 // Sort by rank
 const sortByRank = function (obj) {
@@ -100,21 +120,21 @@ const cryptoUI = function (obj) {
         let coinPercentWeek = document.createElement("p");
     
         coinName.textContent = coin.name;
-        coinPrice.textContent = '$: ' + coin.price_usd;
+        coinPrice.textContent = '$ ' + coin.price_usd;
         coinRank.textContent = coin.rank;
 
         coinPercentH.textContent = coin.percent_change_1h;
         if(coin.percent_change_1h < 0) {
             coinPercentH.style.color = '#ff0033';
         } else {
-            coinPercentH.style.color = '#6aff00';
+            coinPercentH.style.color = '#05af0d';
         }
 
         coinPercentDay.textContent = coin.percent_change_24h;
         if(coin.percent_change_24h < 0) {
             coinPercentDay.style.color = '#ff0033';
         } else {
-            coinPercentDay.style.color = '#6aff00';
+            coinPercentDay.style.color = '#05af0d';
         }
 
         coinPercentWeek.textContent = coin.percent_change_7d;
@@ -122,7 +142,7 @@ const cryptoUI = function (obj) {
         if(coin.percent_change_7d < 0) {
             coinPercentWeek.style.color = '#ff0033';
         } else {
-            coinPercentWeek.style.color = '#6aff00';
+            coinPercentWeek.style.color = '#05af0d';
         }
 
         coinDiv.appendChild(coinName);
@@ -155,6 +175,7 @@ fetch("https://api.coinmarketcap.com/v1/ticker/?limit=50")
         filterCoins(myJson);
         printAmountOfCoins(myJson);
         sortByPrice(myJson);
+        sortByPriceHighest(myJson);
         sortByRank(myJson);
         sortByName(myJson);
     });
