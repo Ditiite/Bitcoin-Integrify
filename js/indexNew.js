@@ -1,23 +1,20 @@
 
 //Filter coins by input from search bar
-const filterCoins = function (obj) {
+const filterCoins = function(obj) {
     const input = document.querySelector("input[name=search]");
-    
+    const nameArray = currencies.map(element => element.name)
+  
     input.addEventListener('input', function() {
-        const filterName = document.querySelectorAll(".details .coin");
-        const filterBy = input.value.toLowerCase();
-
-        filterName.forEach(function (item) {
-            const name = item.querySelector('.name').innerText.toLowerCase();
-            console.log('input')
-            if(name.includes(filterBy)) {
-                item.style.display = 'grid';
-            } else {
-                item.style.display = 'none';
-            }
-        });
+      const filterBy = input.value.toLowerCase();
+      nameArray.forEach(function(item) {
+        if (item.toLowerCase().includes(filterBy)) {
+          document.getElementById(`${item}`).style.display = 'grid';
+        } else {
+          document.getElementById(`${item}`).style.display = 'none';
+        }
+      });
     });
-};
+  };
 
 //Sort by name
 const sortByName = function (obj) {
@@ -110,7 +107,8 @@ const cryptoUI = function (obj) {
 
     obj.forEach(function (coin, i) {
         let coinDiv = document.createElement("div");
-        coinDiv.className = "coin"
+        coinDiv.className = "coin";
+        coinDiv.id = coin.name;
         let coinName = document.createElement("h2");
         coinName.className = "name";
         let coinPrice = document.createElement("p");
@@ -166,22 +164,21 @@ function printAmountOfCoins(obj) {
 
 let currencies;
 
-fetch("https://api.coinmarketcap.com/v1/ticker/?limit=2000")
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (myJson) {
-        currencies = myJson;
-        renderData(currencies)
-    });
+fetch("https://api.coinmarketcap.com/v1/ticker/?limit=2000").then(function(response) {
+  return response.json();
+}).then(function(myJson) {
+  currencies = myJson;
+  renderData(currencies)
+});
 
-    function renderData(currencies) {
-        cryptoUI(currencies);
-        filterCoins(currencies);
-        printAmountOfCoins(currencies);
-        sortByPrice(currencies);
-        sortByPriceHighest(currencies);
-        sortByRank(currencies);
-        sortByName(currencies);
-    }
+function renderData(currencies) {
+  cryptoUI(currencies);
+  filterCoins(currencies);
+  printAmountOfCoins(currencies);
+  sortByPrice(currencies);
+  sortByPriceHighest(currencies);
+  sortByRank(currencies);
+  sortByName(currencies);
+}
+
     
