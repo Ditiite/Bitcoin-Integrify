@@ -71,10 +71,12 @@ SORTING BUTTONS
 ==========================
 */
 .sorting-btns {
-    width: 60%;
+    /* width: 60%; */
     grid-column: 1 / -1;
+    width: 840px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas: 
+        "name priceUp priceDown rank";
 }
 
 .sorting-btns button {
@@ -83,7 +85,6 @@ SORTING BUTTONS
     margin: 1px;
     padding: 10px;
     text-transform: uppercase;
-    widows: 25%;    
     cursor: pointer;
     color: var(--text-color);
 }
@@ -93,6 +94,11 @@ SORTING BUTTONS
     margin-bottom: -5px;
 }
 
+
+.sort-btn-name { grid-area: name; }
+.sort-btn-price-lowest { grid-area: priceUp; }
+.sort-btn-price-higest { grid-area: priceDown; }
+.sort-btn-rank { grid-area: rank; }
 /*
 =======================
 COIN sectoin
@@ -100,10 +106,11 @@ COIN sectoin
 */
 .coin-title {
     display: grid;
-    grid-template-columns:  1fr;
+    /* grid-template-columns:  1fr; */
     grid-column: 1 / -1;
     margin-top: 170px;
     width:  60%;
+    grid-template-columns: 250px 100px 140px repeat(3, 100px);
     justify-self: center;
     grid-gap: 10px; 
 }
@@ -117,12 +124,12 @@ COIN sectoin
     color: var(--title-color);
     position: fixed;
     background-color: var(--title-bg-color);
-    width: 60%;
+    grid-column: 1 / -1;
     align-items: center;
     text-align: left;
     height: 50px;
     display: grid;
-    grid-template-columns: 250px 100px 250px repeat(3, 100px);
+    grid-template-columns: 250px 100px 140px repeat(3, 100px);
     grid-template-areas: 
         "name rank price h day week";
     font-weight: 700;
@@ -151,7 +158,7 @@ COIN sectoin
     padding: 10px;
     display: grid;
     grid-gap: 10px;
-    grid-template-columns: 250px 100px 250px repeat(3, 100px);
+    grid-template-columns: 250px 100px 140px repeat(3, 100px);
     grid-template-areas: 
         "name rank price h day week";
     transition: all .2s ease-in-out;

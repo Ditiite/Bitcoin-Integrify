@@ -165,7 +165,7 @@ function printAmountOfCoins(obj) {
 }
 
 
-fetch("https://api.coinmarketcap.com/v1/ticker/?limit=50")
+fetch("https://api.coinmarketcap.com/v1/ticker/?limit=2000")
     .then(function (response) {
         return response.json();
     })
