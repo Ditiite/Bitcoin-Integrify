@@ -9,7 +9,7 @@ const filterCoins = function (obj) {
 
         filterName.forEach(function (item) {
             const name = item.querySelector('.name').innerText.toLowerCase();
-            
+            console.log('input')
             if(name.includes(filterBy)) {
                 item.style.display = 'grid';
             } else {
@@ -164,19 +164,24 @@ function printAmountOfCoins(obj) {
     totalNum.innerHTML = obj.length;
 }
 
+let currencies;
 
 fetch("https://api.coinmarketcap.com/v1/ticker/?limit=2000")
     .then(function (response) {
         return response.json();
     })
     .then(function (myJson) {
-
-        cryptoUI(myJson);
-        filterCoins(myJson);
-        printAmountOfCoins(myJson);
-        sortByPrice(myJson);
-        sortByPriceHighest(myJson);
-        sortByRank(myJson);
-        sortByName(myJson);
+        currencies = myJson;
+        renderData(currencies)
     });
 
+    function renderData(currencies) {
+        cryptoUI(currencies);
+        filterCoins(currencies);
+        printAmountOfCoins(currencies);
+        sortByPrice(currencies);
+        sortByPriceHighest(currencies);
+        sortByRank(currencies);
+        sortByName(currencies);
+    }
+    
